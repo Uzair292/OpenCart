@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "42281533410",
+    "project_id": "opencart-b33ef",
+    "storage_bucket": "opencart-b33ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:42281533410:android:5a145e8fa7188b6c86c3bb",
+        "android_client_info": {
+          "package_name": "com.example.opencart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "42281533410-u5bvvu0nicpf608fljjdf0r8ldcgghhu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.opencart",
+            "certificate_hash": "ec122e8a50ff8bc21c1a6fcadedc1b8ca98be5ba"
+          }
+        },
+        {
+          "client_id": "42281533410-sk1cktnli9qujcj3su24b9jokv9kc5ql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXeLp8sxS8ZjeZ7GAcIrSx1ZgCjrMxnXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "42281533410-sk1cktnli9qujcj3su24b9jokv9kc5ql.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
