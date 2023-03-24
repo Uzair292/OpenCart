@@ -118,10 +118,6 @@ class RegisterActivity : BaseActivity() {
 
                             // Pass the required values in the constructor.
                             FirestoreClass().registerUser(this@RegisterActivity, user)
-//                            showErrorSnackBar(
-//                                "You are registered successfully. Your user id is ${firebaseUser.uid}",
-//                                false)
-
 //                            FirebaseAuth.getInstance().signOut()
 //                            finish()
 

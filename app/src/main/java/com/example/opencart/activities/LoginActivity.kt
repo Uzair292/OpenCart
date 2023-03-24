@@ -4,10 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import com.example.opencart.R
 import com.example.opencart.databinding.ActivityLoginBinding
 import com.example.opencart.databinding.ActivitySplashBinding
+import com.example.opencart.firebase.FirestoreClass
+import com.example.opencart.models.User
+import com.example.opencart.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
@@ -28,9 +32,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         lgBinding = null
     }
 
-    /*
-    In Login screen the clickable components are Login Button, ForgotPassword text and Register Text.
-    */
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
@@ -54,9 +55,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    /**
-     * A function to validate the login entries of a user.
-     */
     private fun validateLoginDetails(): Boolean {
         return when {
             TextUtils.isEmpty(lgBinding?.etEmail?.text.toString().trim { it <= ' ' }) -> {
@@ -73,9 +71,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    /**
-     * A function to Log-In. The user will be able to log in using the registered email and password with Firebase Authentication.
-     */
+
     private fun logInRegisteredUser() {
 
         if (validateLoginDetails()) {
@@ -91,17 +87,34 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
 
-                    // Hide the progress dialog
-                    hideProgressDialog()
-
                     if (task.isSuccessful) {
+                        FirestoreClass().getUserDetails(this@LoginActivity)
 
-                        showErrorSnackBar("You are logged in successfully.", false)
                     } else {
                         showErrorSnackBar(task.exception!!.message.toString(), true)
                     }
                 }
         }
+    }
+
+    fun userLoggedInSuccess(user: User) {
+
+        // Hide the progress dialog.
+        hideProgressDialog()
+
+        // Print the user details in the log as of now.
+        Log.i("First Name: ", user.firstName)
+        Log.i("Last Name: ", user.lastName)
+        Log.i("Email: ", user.email)
+
+        if (user.profileCompleted == 0) {
+            val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
+            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+            startActivity(intent)
+        } else {
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        }
+        finish()
     }
 
 }

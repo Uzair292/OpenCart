@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,15 +13,20 @@
         android:theme="@style/Theme.OpenCart"
         tools:targetApi="31">
         <activity
+            android:name=".activities.UserProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.OpenCartSplash" />
+        <activity
             android:name=".activities.ForgotPasswordActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.OpenCartSplash"/>
+            android:theme="@style/Theme.OpenCartSplash" />
         <activity
             android:name=".activities.BaseActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.OpenCartSplash"/>
+            android:theme="@style/Theme.OpenCartSplash" />
         <activity
             android:name=".activities.RegisterActivity"
             android:exported="false"
@@ -45,7 +51,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
