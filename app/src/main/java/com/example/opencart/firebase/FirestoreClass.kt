@@ -6,10 +6,11 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
 import android.view.Display.Mode
-import com.example.opencart.activities.LoginActivity
-import com.example.opencart.activities.RegisterActivity
-import com.example.opencart.activities.UserProfileActivity
+import com.example.opencart.ui.activities.LoginActivity
+import com.example.opencart.ui.activities.RegisterActivity
+import com.example.opencart.ui.activities.UserProfileActivity
 import com.example.opencart.models.User
+import com.example.opencart.ui.activities.SettingsActivity
 import com.example.opencart.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -74,12 +75,18 @@ class FirestoreClass {
                         // Call a function of base activity for transferring the result to it.
                         activity.userLoggedInSuccess(user)
                     }
+                    is SettingsActivity -> {
+                        activity.userDetailsSuccess(user)
+                    }
                 }
             }
             .addOnFailureListener { e ->
                 // Hide the progress dialog if there is any error. And print the error in log.
                 when (activity) {
                     is LoginActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is SettingsActivity -> {
                         activity.hideProgressDialog()
                     }
                 }

@@ -1,4 +1,4 @@
-package com.example.opencart.activities
+package com.example.opencart.ui.activities
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity

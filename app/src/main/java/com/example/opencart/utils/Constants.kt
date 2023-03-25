@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
-import com.example.opencart.activities.UserProfileActivity
+import com.example.opencart.ui.activities.UserProfileActivity
 
 object Constants {
     const val USERS : String = "users"
@@ -17,12 +17,15 @@ object Constants {
     const val MALE: String = "Male"
     const val FEMALE: String = "Female"
 
+    const val FIRST_NAME: String = "firstName"
+    const val LAST_NAME: String = "lastName"
+
     // Firebase database field names
     const val MOBILE: String = "mobile"
     const val GENDER: String = "gender"
 
     const val IMAGE: String = "image"
-    const val PROFILE_COMPLETED = "profileCompleted"
+    const val COMPLETE_PROFILE = "profileCompleted"
 
     const val USER_PROFILE_IMAGE:String = "User_Profile_Image"
     /*

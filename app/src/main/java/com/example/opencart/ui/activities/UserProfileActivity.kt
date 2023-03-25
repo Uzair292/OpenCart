@@ -1,4 +1,4 @@
-package com.example.opencart.activities
+package com.example.opencart.ui.activities
 
 import android.Manifest
 import android.content.Intent
@@ -39,7 +39,6 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         upBinding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(upBinding?.root)
-
         if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)){
         mUserDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -48,14 +47,41 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 //                intent.getParcelableExtra<User>(Constants.EXTRA_USER_DETAILS)
 //            }
         }
-        upBinding?.etFirstName?.setText(mUserDetails.firstName)
-        upBinding?.etFirstName?.isEnabled = false
 
-        upBinding?.etLastName?.setText(mUserDetails.lastName)
-        upBinding?.etLastName?.isEnabled = false
+        if (mUserDetails.profileCompleted == 0) {
+            // Update the title of the screen to complete profile.
+            upBinding?.tvTitle?.text = resources.getString(R.string.title_complete_profile)
 
-        upBinding?.etEmail?.setText(mUserDetails.email)
-        upBinding?.etEmail?.isEnabled = false
+            // Here, the some of the edittext components are disabled because it is added at a time of Registration.
+            upBinding?.etFirstName?.isEnabled = false
+            upBinding?.etFirstName?.setText(mUserDetails.firstName)
+
+            upBinding?.etLastName?.isEnabled = false
+            upBinding?.etLastName?.setText(mUserDetails.lastName)
+
+            upBinding?.etEmail?.isEnabled = false
+            upBinding?.etEmail?.setText(mUserDetails.email)
+        } else {
+
+            setupActionBar(upBinding!!.toolbarUserProfileActivity)
+            upBinding?.tvTitle?.text = resources.getString(R.string.edit_profile)
+            GlideLoader(this@UserProfileActivity).loadUserPicture(mUserDetails.image, upBinding!!.ivUserPhoto)
+
+            upBinding?.etFirstName?.setText(mUserDetails.firstName)
+            upBinding?.etLastName?.setText(mUserDetails.lastName)
+
+            upBinding?.etEmail?.isEnabled = false
+            upBinding?.etEmail?.setText(mUserDetails.email)
+
+            if (mUserDetails.mobile != 0L) {
+                upBinding?.etMobileNumber?.setText(mUserDetails.mobile.toString())
+            }
+            if (mUserDetails.gender == Constants.MALE) {
+                upBinding?.rbMale?.isChecked = true
+            } else {
+                upBinding?.rbFemale?.isChecked = true
+            }
+        }
 
         upBinding?.ivUserPhoto?.setOnClickListener(this@UserProfileActivity)
         upBinding?.btnSave?.setOnClickListener(this@UserProfileActivity)
@@ -124,27 +150,48 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    private fun updateUserProfileDetails(){
+    private fun updateUserProfileDetails() {
+
         val userHashMap = HashMap<String, Any>()
-        val mobileNumber = upBinding?.etMobileNumber?.text.toString().trim { it <= ' ' }
-        if (mobileNumber.isNotEmpty()) {
-            userHashMap[Constants.MOBILE] = mobileNumber.toLong()
+
+        val firstName = upBinding?.etFirstName?.text.toString().trim { it <= ' ' }
+        if (firstName != mUserDetails.firstName) {
+            userHashMap[Constants.FIRST_NAME] = firstName
         }
-        val gender = if (upBinding?.rbMale!!.isChecked) {
+
+        val lastName = upBinding?.etLastName?.text.toString().trim { it <= ' ' }
+        if (lastName != mUserDetails.lastName) {
+            userHashMap[Constants.LAST_NAME] = lastName
+        }
+
+        val mobileNumber = upBinding?.etMobileNumber?.text.toString().trim { it <= ' ' }
+        val gender = if (upBinding!!.rbMale.isChecked) {
             Constants.MALE
         } else {
             Constants.FEMALE
         }
-        userHashMap[Constants.GENDER] = gender
-        if (mUserProfileImageURL.isNotEmpty()){
+
+        if (mUserProfileImageURL.isNotEmpty()) {
             userHashMap[Constants.IMAGE] = mUserProfileImageURL
         }
-        userHashMap[Constants.PROFILE_COMPLETED] = 1
+
+        if (mobileNumber.isNotEmpty() && mobileNumber != mUserDetails.mobile.toString()) {
+            userHashMap[Constants.MOBILE] = mobileNumber.toLong()
+        }
+
+        if (gender.isNotEmpty() && gender != mUserDetails.gender) {
+            userHashMap[Constants.GENDER] = gender
+        }
+
+        if (mUserDetails.profileCompleted == 0) {
+            userHashMap[Constants.COMPLETE_PROFILE] = 1
+        }
         FirestoreClass().updateUserProfileData(
             this@UserProfileActivity,
             userHashMap
         )
     }
+
     private fun validateUserProfileDetails(): Boolean {
          when {
             TextUtils.isEmpty(upBinding?.etMobileNumber?.text.toString().trim { it <= ' ' }) -> {
@@ -176,7 +223,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             Toast.LENGTH_SHORT
         ).show()
 
-        startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
+        startActivity(Intent(this@UserProfileActivity, DashboardActivity::class.java))
         finish()
     }
 

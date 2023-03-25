@@ -1,4 +1,4 @@
-package com.example.opencart.activities
+package com.example.opencart.ui.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -16,22 +16,12 @@ class SplashActivity : AppCompatActivity() {
 
         val runnable = Runnable {
             // Start the second activity after a 3-second delay
-            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+            startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
             finish()
         }
 //        findViewById<View>(android.R.id.content).postDelayed(runnable, 3000) // Delay in milliseconds (3 seconds = 3000 milliseconds)
         spBinding?.root?.postDelayed(runnable, 3000)
 
-
-
-        /*
-        Deprecated Code
-        Handler().postDelayed({
-            // Start the second activity after a 3-second delay
-            startActivity(Intent(this@SplashActivity,MainActivity::class.java))
-            finish()
-        }, 3000) // Delay in milliseconds (3 seconds = 3000 milliseconds)
-         */
         /*
         Code for changing font
         val typeface : Typeface = Typeface.createFromAsset(assets, "Montserrat-Bold.ttf")
