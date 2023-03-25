@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.opencart.R
 import com.example.opencart.databinding.FragmentOrderBinding
 
-class OrderFragment : Fragment() {
+class OrderFragment : BaseFragment() {
 
     private var _binding: FragmentOrderBinding? = null
     private val binding get() = _binding!!

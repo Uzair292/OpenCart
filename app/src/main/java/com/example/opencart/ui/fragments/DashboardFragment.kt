@@ -12,7 +12,7 @@ import com.example.opencart.ui.activities.DashboardActivity
 import com.example.opencart.ui.activities.SettingsActivity
 import com.example.opencart.ui.activities.UserProfileActivity
 
-class DashboardFragment : Fragment() {
+class DashboardFragment : BaseFragment() {
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!

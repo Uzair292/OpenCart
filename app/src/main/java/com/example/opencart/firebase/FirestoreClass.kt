@@ -6,11 +6,11 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
 import android.view.Display.Mode
-import com.example.opencart.ui.activities.LoginActivity
-import com.example.opencart.ui.activities.RegisterActivity
-import com.example.opencart.ui.activities.UserProfileActivity
+import androidx.fragment.app.Fragment
+import com.example.opencart.models.Product
 import com.example.opencart.models.User
-import com.example.opencart.ui.activities.SettingsActivity
+import com.example.opencart.ui.activities.*
+import com.example.opencart.ui.fragments.ProductFragment
 import com.example.opencart.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -125,11 +125,11 @@ class FirestoreClass {
             }
     }
 
-    fun uploadImageToCloudStorage(activity: Activity, imageFileURI: Uri?) {
+    fun uploadImageToCloudStorage(activity: Activity, imageFileURI: Uri?, imageTpye: String) {
 
         //getting the storage reference
         val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
-            Constants.USER_PROFILE_IMAGE + System.currentTimeMillis() + "."
+            imageTpye + System.currentTimeMillis() + "."
                     + Constants.getFileExtension(
                 activity,
                 imageFileURI
@@ -155,6 +155,9 @@ class FirestoreClass {
                             is UserProfileActivity -> {
                                 activity.imageUploadSuccess(uri.toString())
                             }
+                            is AddProductActivity -> {
+                                activity.imageUploadSuccess(uri.toString())
+                            }
                         }
                     }
             }
@@ -165,6 +168,9 @@ class FirestoreClass {
                     is UserProfileActivity -> {
                         activity.hideProgressDialog()
                     }
+                    is AddProductActivity -> {
+                        activity.hideProgressDialog()
+                    }
                 }
 
                 Log.e(
@@ -172,6 +178,63 @@ class FirestoreClass {
                     exception.message,
                     exception
                 )
+            }
+    }
+
+    fun uploadProductDetails(activity: AddProductActivity, productInfo: Product) {
+
+        mFirestore.collection(Constants.PRODUCTS)
+            .document()
+            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
+            .set(productInfo, SetOptions.merge())
+            .addOnSuccessListener {
+
+                // Here call a function of base activity for transferring the result to it.
+                activity.productUploadSuccess()
+            }
+            .addOnFailureListener { e ->
+
+                activity.hideProgressDialog()
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while uploading the product details.",
+                    e
+                )
+            }
+    }
+
+    fun getProductsList(fragment: Fragment) {
+        // The collection name for PRODUCTS
+        mFirestore.collection(Constants.PRODUCTS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserId())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+
+                Log.e("Products List", document.documents.toString())
+                val productsList: ArrayList<Product> = ArrayList()
+                for (i in document.documents) {
+
+                    val product = i.toObject(Product::class.java)
+                    product!!.product_id = i.id
+
+                    productsList.add(product)
+                }
+
+                when (fragment) {
+                    is ProductFragment -> {
+                        fragment.successProductsListFromFireStore(productsList)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is any error based on the base class instance.
+                when (fragment) {
+                    is ProductFragment -> {
+                        fragment.hideProgressDialog()
+                    }
+                }
+                Log.e("Get Product List", "Error while getting product list.", e)
             }
     }
 

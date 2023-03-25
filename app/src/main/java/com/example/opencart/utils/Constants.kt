@@ -9,6 +9,8 @@ import com.example.opencart.ui.activities.UserProfileActivity
 
 object Constants {
     const val USERS : String = "users"
+    const val PRODUCTS : String = "products"
+
     const val SHARED_PREFERENCES_NAME = "OpenCart-Preferences"
     const val LOGGED_IN_USERNAME = "Logged-in-username"
     const val EXTRA_USER_DETAILS = "user_details"
@@ -20,7 +22,6 @@ object Constants {
     const val FIRST_NAME: String = "firstName"
     const val LAST_NAME: String = "lastName"
 
-    // Firebase database field names
     const val MOBILE: String = "mobile"
     const val GENDER: String = "gender"
 
@@ -28,6 +29,9 @@ object Constants {
     const val COMPLETE_PROFILE = "profileCompleted"
 
     const val USER_PROFILE_IMAGE:String = "User_Profile_Image"
+    const val PRODUCT_IMAGE: String = "Product_Image"
+
+    const val USER_ID: String = "user_id"
     /*
     fun showImageChooser(activity: Activity) {
         // An intent for launching the image selection of phone storage.
