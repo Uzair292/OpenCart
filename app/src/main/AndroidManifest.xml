@@ -14,10 +14,31 @@
         android:theme="@style/Theme.OpenCart"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.AddEditAddressActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.OpenCartSplash"
+            />
+        <activity
+            android:name=".ui.activities.AddressListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.OpenCartSplash" />
+        <activity
+            android:name=".ui.activities.CartListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.OpenCartSplash" />
+        <activity
+            android:name=".ui.activities.ProductDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.OpenCartSplash" />
+        <activity
             android:name=".ui.activities.AddProductActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.OpenCartSplash"/>
+            android:theme="@style/Theme.OpenCartSplash" />
         <activity
             android:name=".ui.activities.SettingsActivity"
             android:exported="false"

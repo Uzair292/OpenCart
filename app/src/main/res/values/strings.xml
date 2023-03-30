@@ -165,4 +165,8 @@
 
     <string name="title_sold_product_details">SOLD PRODUCT DETAILS</string>
 
+    <string name="msg_for_available_stock">Available stock is %1$s!. You can not add more than stock quantity.</string>
+    <string name="err_msg_please_enter_full_name">please enter full name</string>
+    <string name="err_msg_please_enter_address">please enter address</string>
+    <string name="err_msg_please_enter_zip_code">please enter zip code</string>
 </resources>

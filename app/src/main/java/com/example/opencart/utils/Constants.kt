@@ -10,6 +10,8 @@ import com.example.opencart.ui.activities.UserProfileActivity
 object Constants {
     const val USERS : String = "users"
     const val PRODUCTS : String = "products"
+    const val CART_ITEMS : String = "cart_item"
+    const val ADDRESSES : String = "addresses"
 
     const val SHARED_PREFERENCES_NAME = "OpenCart-Preferences"
     const val LOGGED_IN_USERNAME = "Logged-in-username"
@@ -32,6 +34,22 @@ object Constants {
     const val PRODUCT_IMAGE: String = "Product_Image"
 
     const val USER_ID: String = "user_id"
+    const val EXTRA_PRODUCT_ID: String = "extra_product_id"
+    const val EXTRA_PRODUCT_OWNER_ID: String = "extra_product_owner_id"
+    const val DEFAULT_CART_QUANTITY: String = "1"
+
+    const val PRODUCT_ID: String = "product_id"
+
+    const val CART_QUANTITY: String = "cart_quantity"
+
+    const val HOME: String = "Home"
+    const val OFFICE: String = "Office"
+    const val OTHER: String = "Other"
+
+    const val EXTRA_ADDRESS_DETAILS: String = "address_details"
+    const val EXTRA_SELECT_ADDRESS: String = "extra_select_address"
+    const val ADD_ADDRESS_REQUEST_CODE: Int = 121
+
     /*
     fun showImageChooser(activity: Activity) {
         // An intent for launching the image selection of phone storage.
